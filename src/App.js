@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import React from "react";
+import { Routes, Route } from "react-router";
+import CompletedTasks from "./components/completedTasks/completedTasks";
+import NotCompletedTasks from "./components/notCompletedTasks/notCompletedTasks";
+import AllTasks from "./components/allTasks/allTasks";
+import { TaskContext } from "./contexts/tasksContexts";
+import Home from "./components/home/home";
+import { useState } from "react";
+const intialTasksValue = [
+];
+const App = () => {
+  const [tasks, setTasks] = useState(intialTasksValue);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <TaskContext.Provider value={[tasks, setTasks]}>
+      <div className="App">
+        <Routes>
+          <Route index path="/" element={<Home />} />
+          <Route path="/completed" element={<CompletedTasks />} />
+          <Route path="/notcompleted" element={<NotCompletedTasks />} />
+          <Route path="/all" element={<AllTasks />} />
+        </Routes>
+      </div>
+    </TaskContext.Provider>
   );
-}
+};
 
 export default App;
